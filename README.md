@@ -4,7 +4,7 @@
 - [x] Dever ser possivel se cadastrar;
 - [x] Dever ser possivel se cadastrar como instrutor;
 - [x] Dever ser possivel se authenticar;
-- [x] Dever ser possivel se criar uma pergunta;
+- [x] Dever ser possivel criar uma pergunta;
 - [x] Dever ser possivel responder uma pergunta;
 - [x] Dever ser possivel responder uma pergunta;
 

@@ -34,7 +34,7 @@ export class InMemoryBestAnswerRepository implements BestAnswerRepository {
     const bestAnswerIndex = this.items.findIndex((item) => item.id === id)
     const bestAnswer = this.items.find((item) => item.id === id)
 
-    if (bestAnswer && bestAnswerIndex) {
+    if (bestAnswer) {
       const bestAnswerDelete = {
         id: bestAnswer.id,
         answerId: bestAnswer.answerId,

@@ -7,18 +7,18 @@ import { UserIsNotAnInstructorError } from './errors/user-is-not-an-instructor-e
 import { QuestionNotExistsError } from './errors/question-not-exists-error'
 import { generateSlug } from '@/utils/generateSlug'
 
-interface AnswerQuestionUseCaseRequest {
+interface CreateAnswerQuestionUseCaseRequest {
   slugText: string
   content: string
   questionId: string
   authorId: string
 }
 
-interface AnswerQuestionUseCaseResponse {
+interface CreateAnswerQuestionUseCaseResponse {
   answer: Answer
 }
 
-export class AnswerQuestionUseCase {
+export class CreateAnswerQuestionUseCase {
   constructor(
     private answerRepository: AnswerRepository,
     private questionRepository: QuestionRepository,
@@ -30,7 +30,7 @@ export class AnswerQuestionUseCase {
     questionId,
     content,
     slugText,
-  }: AnswerQuestionUseCaseRequest): Promise<AnswerQuestionUseCaseResponse> {
+  }: CreateAnswerQuestionUseCaseRequest): Promise<CreateAnswerQuestionUseCaseResponse> {
     const userExist = await this.userRepository.findById(authorId)
 
     if (!userExist) {

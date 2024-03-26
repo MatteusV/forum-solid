@@ -46,8 +46,9 @@ model Question {
   author     User    @relation(fields: [authorId], references: [id])
   bestAnswer Answer? @relation("bestAnswer", fields: [bestAnswerId], references: [id])
 
-  answers Answer[]
-  Comment Comment[]
+  answers    Answer[]
+  Comment    Comment[]
+  BestAnswer BestAnswer[]
 
   @@map("questions")
 }
@@ -63,9 +64,10 @@ model Answer {
   authorId   String   @map("author_id")
   questionId String   @map("question_id")
 
-  author       User      @relation(fields: [authorId], references: [id])
-  bestAnswerOn Question? @relation("bestAnswer")
-  question     Question  @relation(fields: [questionId], references: [id])
+  author       User         @relation(fields: [authorId], references: [id])
+  bestAnswerOn Question?    @relation("bestAnswer")
+  question     Question     @relation(fields: [questionId], references: [id])
+  BestAnswer   BestAnswer[]
 
   @@map("answers")
 }
@@ -84,4 +86,17 @@ model Comment {
   question Question @relation(fields: [questionId], references: [id])
 
   @@map("comments")
+}
+
+model BestAnswer {
+  id         String  @id @default(uuid())
+  questionId String  @map("question_id")
+  answerId   String  @map("answer_id")
+  delete     Boolean @default(true)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  answer   Answer   @relation(fields: [answerId], references: [id])
+  question Question @relation(fields: [questionId], references: [id])
 }

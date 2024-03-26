@@ -2,7 +2,7 @@ import { InMemoryUserRepository } from '@/repositories/in-memory/in-memory-user-
 import { expect, describe, it, beforeEach } from 'vitest'
 import { hash } from 'bcryptjs'
 import { InMemoryQuestionRepository } from '@/repositories/in-memory/in-memory-question-repository'
-import { AnswerQuestionUseCase } from './answer-question'
+import { CreateAnswerQuestionUseCase } from './create-answer-question'
 import { InMemoryAnswerRepository } from '@/repositories/in-memory/in-memory-answer-repository'
 import { UserIsNotAnInstructorError } from './errors/user-is-not-an-instructor-error'
 import { QuestionNotExistsError } from './errors/question-not-exists-error'
@@ -11,14 +11,14 @@ import { UserNotExistsError } from './errors/user-not-exists-error'
 let usersRepository: InMemoryUserRepository
 let answerRepository: InMemoryAnswerRepository
 let questionRepository: InMemoryQuestionRepository
-let sut: AnswerQuestionUseCase
+let sut: CreateAnswerQuestionUseCase
 
-describe('Answer Question Use Case', () => {
+describe('Create Answer Question Use Case', () => {
   beforeEach(() => {
     questionRepository = new InMemoryQuestionRepository()
     usersRepository = new InMemoryUserRepository()
     answerRepository = new InMemoryAnswerRepository()
-    sut = new AnswerQuestionUseCase(
+    sut = new CreateAnswerQuestionUseCase(
       answerRepository,
       questionRepository,
       usersRepository,

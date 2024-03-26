@@ -32,9 +32,21 @@ export class InMemoryAnswerRepository implements AnswerRepository {
 
   async delete(id: string) {
     const answerInIndex = this.items.findIndex((item) => item.id === id)
+    const answerDelete = this.items.find((item) => item.id === id)
 
-    if (answerInIndex) {
-      this.items.slice(answerInIndex, 1)
+    if (answerDelete) {
+      const answer = {
+        id: answerDelete.id,
+        slug: answerDelete.slug,
+        content: answerDelete.content,
+        createdAt: answerDelete.createdAt,
+        delete: true,
+        updatedAt: new Date(),
+        authorId: answerDelete.authorId,
+        questionId: answerDelete.questionId,
+      }
+
+      this.items[answerInIndex] = answer
     }
   }
 }

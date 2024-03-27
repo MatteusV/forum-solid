@@ -9,7 +9,8 @@ export class DeleteBestAnswerUseCase {
   constructor(private bestAnswerRepository: BestAnswerRepository) {}
 
   async execute({ bestAnswerId }: DeleteBestAnswerUseCaseRequest) {
-    const bestAnswerExits = this.bestAnswerRepository.findById(bestAnswerId)
+    const bestAnswerExits =
+      await this.bestAnswerRepository.findById(bestAnswerId)
 
     if (!bestAnswerExits) {
       throw new BestAnswerNotExistsError()

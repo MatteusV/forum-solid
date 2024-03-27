@@ -1,5 +1,6 @@
 @baseUrl = http://localhost:3333
 @authToken = {{authenticate.response.body.token}}
+@refreshToken = {{refresh_token.response.body.token}}
 
 # @name create_account
 POST {{baseUrl}}/users
@@ -24,6 +25,11 @@ Content-Type: application/json
 }
 
 ###
+# @name refresh_token
+
+PATCH {{baseUrl}}/token/refresh
+
+###
 
 # @name create_question
 POST {{baseUrl}}/questions
@@ -36,8 +42,3 @@ Authorization: Bearer {{authToken}}
 }
 
 ###
-
-# @name fetch_recent_questions
-GET {{baseUrl}}/questions?page=1
-Content-Type: application/json
-Authorization: Bearer {{authToken}}

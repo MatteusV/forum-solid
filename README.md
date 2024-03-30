@@ -7,6 +7,7 @@
 - [x] Dever ser possivel criar uma pergunta;
 - [x] Dever ser possivel responder uma pergunta;
 - [x] Dever ser possivel deletar uma pergunta;
+- [x] Dever ser possivel deletar uma resposta;
 - [x] Dever ser possivel marcar a melhor resposta;
 
 
@@ -15,3 +16,5 @@
 - [x] Apenas usuários com a função de instrutor poderá responder as perguntas;
 - [x] Apenas o autor da pergunta pode marcar a melhor resposta;
 - [x] Apenas o autor da pergunta pode deletar a pergunta;
+- [x] Apenas o autor da pergunta ou autor da resposta pode deletar a melhor resposta;
+- [x] Apenas o autor da pergunta ou autor da resposta pode deletar resposta;

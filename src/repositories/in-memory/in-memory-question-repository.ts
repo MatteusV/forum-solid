@@ -5,6 +5,16 @@ import { randomUUID } from 'crypto'
 export class InMemoryQuestionRepository implements QuestionRepository {
   public items: Question[] = []
 
+async fetchQuestions() {
+  const questions = this.items
+
+  if(questions.length === 0) {
+    return null
+  }
+
+  return questions
+}
+
   async findById(id: string) {
     const question = this.items.find((item) => item.id === id)
 

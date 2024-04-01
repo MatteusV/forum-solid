@@ -5,6 +5,19 @@ import { randomUUID } from 'crypto'
 export class InMemoryAnswerRepository implements AnswerRepository {
   public items: Answer[] = []
 
+
+  async fetchByQuestionId(questionId: string): Promise<{ id: string; slug: string; content: string; delete: boolean; createdAt: Date; updatedAt: Date; authorId: string; questionId: string }[] | null> {
+    const answers = this.items.filter((item) => item.questionId === questionId)
+
+    if(!answers) {
+      return null
+    }
+
+    return answers
+  }
+
+
+
   async create(data: Prisma.AnswerUncheckedCreateInput) {
     const answer = {
       id: randomUUID(),

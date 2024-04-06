@@ -1,3 +1,4 @@
+import { BestAnswerAlreadyExistsError } from '@/use-cases/errors/best-answer-already-exists-error'
 import { BestAnswerNotExistsError } from '@/use-cases/errors/best-answer-not-exists-error'
 import { makeCreateBestAnswerUseCase } from '@/use-cases/factories/make-create-best-answer-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
@@ -24,7 +25,10 @@ export async function defineTheBestAnswer(
       userId,
     })
   } catch (error) {
-    if (error instanceof BestAnswerNotExistsError) {
+    if (
+      error instanceof BestAnswerNotExistsError ||
+      error instanceof BestAnswerAlreadyExistsError
+    ) {
       return reply.status(400).send({ message: error.message })
     }
 

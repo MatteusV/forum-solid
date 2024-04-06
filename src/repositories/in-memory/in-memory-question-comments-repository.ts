@@ -38,4 +38,14 @@ export class InMemoryQuestionComments implements QuestionCommentRepository {
       this.items.splice(commentIndex, 1)
     }
   }
+
+  async fetchMany() {
+    const comments = this.items
+
+    if (!comments) {
+      return null
+    }
+
+    return comments
+  }
 }

@@ -74,4 +74,14 @@ async fetchQuestions() {
       this.items[questionIndex] = question
     }
   }
+
+  async fetchMany() {
+    const questions = this.items
+
+    if (!questions) {
+      return null
+    }
+
+    return questions
+  }
 }

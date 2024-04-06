@@ -4,10 +4,10 @@ import jwt from '@fastify/jwt'
 
 import { usersRoutes } from './http/controllers/user/route'
 import { env } from './env'
+import { questionsRoute } from './http/controllers/question/route'
 
 export const app = fastify()
 
-app.register(usersRoutes)
 app.register(cookies)
 app.register(jwt, {
   secret: env.JWT_SECRET,
@@ -19,3 +19,6 @@ app.register(jwt, {
     expiresIn: '10m',
   },
 })
+
+app.register(usersRoutes)
+app.register(questionsRoute)

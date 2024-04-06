@@ -3,6 +3,7 @@ import { UserRepository } from '@/repositories/user-repository'
 import { Question } from '@prisma/client'
 import { UserNotExistsError } from './errors/user-not-exists-error'
 import { generateSlug } from '@/utils/generateSlug'
+import { SlugAlreadyExistsError } from './errors/slug-already-exists-error'
 
 interface CreateQuestionUseCaseRequest {
   title: string
@@ -32,6 +33,12 @@ export class CreateQuestionUseCase {
     }
 
     const slug = generateSlug(title)
+
+    const slugExists = await this.questionRepository.findBySlug(slug)
+
+    if(slugExists) {
+      throw new SlugAlreadyExistsError()
+    }
 
     const question = await this.questionRepository.create({
       authorId,

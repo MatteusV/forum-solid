@@ -54,4 +54,14 @@ export class PrismaQuestionRepository implements QuestionRepository {
       },
     })
   }
+
+  async fetchMany() {
+    const questions = await prisma.question.findMany()
+
+    if (!questions) {
+      return null
+    }
+
+    return questions
+  }
 }

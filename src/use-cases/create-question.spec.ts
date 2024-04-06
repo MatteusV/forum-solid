@@ -4,6 +4,7 @@ import { hash } from 'bcryptjs'
 import { InMemoryQuestionRepository } from '@/repositories/in-memory/in-memory-question-repository'
 import { CreateQuestionUseCase } from './create-question'
 import { UserNotExistsError } from './errors/user-not-exists-error'
+import { SlugAlreadyExistsError } from './errors/slug-already-exists-error'
 
 let usersRepository: InMemoryUserRepository
 let questionRepository: InMemoryQuestionRepository
@@ -66,5 +67,27 @@ describe('Create Question Use Case', () => {
         title: 'Nova pergunta',
       }),
     ).rejects.toBeInstanceOf(UserNotExistsError)
+  })
+
+  it('should not be able to create a question with same slug', async () => {
+    const user = await usersRepository.create({
+      email: 'varlesse04@gmail.com',
+      name: 'matteus',
+      password: await hash('123456', 8),
+    })
+
+     await sut.execute({
+      authorId: user.id,
+      content: 'content the a question',
+      title: 'Nova pergunta',
+    })
+
+    await expect(() =>
+      sut.execute({
+        authorId: user.id,
+        content: 'content the a question',
+        title: 'Nova pergunta',
+      }),
+    ).rejects.toBeInstanceOf(SlugAlreadyExistsError)
   })
 })

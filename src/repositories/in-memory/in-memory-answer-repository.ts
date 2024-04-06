@@ -62,4 +62,14 @@ export class InMemoryAnswerRepository implements AnswerRepository {
       this.items[answerInIndex] = answer
     }
   }
+
+  async fetchMany() {
+    const answers = this.items
+
+    if (!answers) {
+      return null
+    }
+
+    return answers
+  }
 }

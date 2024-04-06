@@ -12,7 +12,6 @@ Content-Type: application/json
   "password": "123456",
   "role": "student"
 }
-
 ###
 
 # @name authenticate
@@ -23,12 +22,10 @@ Content-Type: application/json
   "email": "varlesse04@gmail.com",
   "password": "123456"
 }
-
 ###
+
 # @name refresh_token
-
 PATCH {{baseUrl}}/token/refresh
-
 ###
 
 # @name create_question
@@ -37,8 +34,7 @@ Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-  "title": "Nova pergunta 2",
+  "title": "Nova pergunta",
   "content": "Teste"
 }
-
 ###

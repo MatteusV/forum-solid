@@ -3,9 +3,12 @@ import { makeGetQuestionByIdUseCase } from '@/use-cases/factories/make-get-quest
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
-export async function getQuestion(request: FastifyRequest, reply: FastifyReply) {
+export async function getQuestion(
+  request: FastifyRequest,
+  reply: FastifyReply,
+) {
   const requestParamsSchema = z.object({
-    questionId: z.string().uuid()
+    questionId: z.string().uuid(),
   })
 
   const { questionId } = requestParamsSchema.parse(request.params)
@@ -14,13 +17,13 @@ export async function getQuestion(request: FastifyRequest, reply: FastifyReply) 
     const getQuestionByIdUseCase = makeGetQuestionByIdUseCase()
 
     const { question } = await getQuestionByIdUseCase.execute({
-     questionId
+      questionId,
     })
 
     return reply.status(201).send({ question })
   } catch (error) {
-    if(error instanceof QuestionNotExistsError) {
-      return reply.status(400).send({message: error.message})
+    if (error instanceof QuestionNotExistsError) {
+      return reply.status(400).send({ message: error.message })
     }
     throw error
   }

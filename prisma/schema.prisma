@@ -55,7 +55,6 @@ model Question {
 
 model Answer {
   id      String  @id @default(uuid())
-  slug    String  @unique
   content String
   delete  Boolean @default(false)
 

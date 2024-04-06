@@ -3,6 +3,7 @@ import { QuestionRepository } from '../question-repository'
 import { prisma } from '@/lib/prisma'
 
 export class PrismaQuestionRepository implements QuestionRepository {
+
   async findById(id: string) {
     const question = await prisma.question.findUnique({
       where: {
@@ -64,4 +65,6 @@ export class PrismaQuestionRepository implements QuestionRepository {
 
     return questions
   }
+
+
 }

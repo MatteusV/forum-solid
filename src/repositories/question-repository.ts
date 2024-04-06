@@ -6,5 +6,4 @@ export interface QuestionRepository {
   fetchMany(): Promise<Question[] | null>
   create(data: Prisma.QuestionUncheckedCreateInput): Promise<Question>
   delete(id: string): Promise<void>
-  fetchQuestions(): Promise<Question[] | null>
 }

@@ -3,12 +3,10 @@ import { AnswerRepository } from '../answer-repository'
 import { prisma } from '@/lib/prisma'
 
 export class PrismaAnswerRepository implements AnswerRepository {
-
   async create(data: Prisma.AnswerUncheckedCreateInput) {
     const answer = await prisma.answer.create({
       data: {
         content: data.content,
-        slug: data.slug,
         authorId: data.authorId,
         questionId: data.questionId,
       },
@@ -46,10 +44,10 @@ export class PrismaAnswerRepository implements AnswerRepository {
     const answers = await prisma.answer.findMany({
       where: {
         questionId,
-      }
+      },
     })
 
-    if(!answers) {
+    if (!answers) {
       return null
     }
 

@@ -7,8 +7,9 @@ import { QuestionNotExistsError } from './errors/question-not-exists-error'
 import { UserNotExistsError } from './errors/user-not-exists-error'
 import { CreateBestAnswerUseCase } from './create-best-answer'
 import { InMemoryBestAnswerRepository } from '@/repositories/in-memory/in-memory-best-answer-repository'
-import { UserNotHavePemissionError } from './errors/user-not-have-permission-error'
+import { UserNotHavePermissionError } from './errors/user-not-have-permission-error'
 import { AnswerNotExistsError } from './errors/answer-not-exists-error'
+import { BestAnswerAlreadyExistsError } from './errors/best-answer-already-exists-error'
 
 let usersRepository: InMemoryUserRepository
 let answerRepository: InMemoryAnswerRepository
@@ -48,7 +49,6 @@ describe('Create Best Answer Question Use Case', () => {
       authorId: 'user-01',
       content: 'content a answer',
       questionId: question.id,
-      slug: 'slug-a-answer',
     })
 
     const { bestAnswer } = await sut.execute({
@@ -78,7 +78,6 @@ describe('Create Best Answer Question Use Case', () => {
       authorId: 'user-01',
       content: 'content a answer',
       questionId: question.id,
-      slug: 'slug-a-answer',
     })
 
     await expect(() =>
@@ -87,7 +86,7 @@ describe('Create Best Answer Question Use Case', () => {
         questionId: question.id,
         userId: user.id,
       }),
-    ).rejects.toBeInstanceOf(UserNotHavePemissionError)
+    ).rejects.toBeInstanceOf(UserNotHavePermissionError)
   })
 
   it('should not be able to create a better answer without the userId', async () => {
@@ -102,7 +101,6 @@ describe('Create Best Answer Question Use Case', () => {
       authorId: 'user-01',
       content: 'content a answer',
       questionId: question.id,
-      slug: 'slug-a-answer',
     })
 
     await expect(() =>
@@ -148,7 +146,6 @@ describe('Create Best Answer Question Use Case', () => {
       authorId: 'user-01',
       content: 'content a answer',
       questionId: 'question-01',
-      slug: 'slug-a-answer',
     })
 
     await expect(() =>
@@ -158,5 +155,40 @@ describe('Create Best Answer Question Use Case', () => {
         userId: user.id,
       }),
     ).rejects.toBeInstanceOf(QuestionNotExistsError)
+  })
+
+  it('not should be possible create a duplicate best answer', async () => {
+    const user = await usersRepository.create({
+      email: 'varlesse04@gmail.com',
+      name: 'matteus',
+      password: await hash('123456', 8),
+    })
+
+    const question = await questionRepository.create({
+      authorId: user.id,
+      content: 'content a question',
+      title: 'Nova pergunta',
+      slug: 'nova-pergunta',
+    })
+
+    const answer = await answerRepository.create({
+      authorId: 'user-01',
+      content: 'content a answer',
+      questionId: question.id,
+    })
+
+    await sut.execute({
+      answerId: answer.id,
+      questionId: question.id,
+      userId: user.id,
+    })
+
+    await expect(() =>
+      sut.execute({
+        answerId: answer.id,
+        questionId: question.id,
+        userId: user.id,
+      }),
+    ).rejects.toBeInstanceOf(BestAnswerAlreadyExistsError)
   })
 })

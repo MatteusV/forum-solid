@@ -1,21 +1,21 @@
-import { QuestionRepository } from "@/repositories/question-repository";
-import { Question } from "@prisma/client";
-import { QuestionNotExistsError } from "./errors/question-not-exists-error";
+import { QuestionRepository } from '@/repositories/question-repository'
+import { Question } from '@prisma/client'
+import { QuestionNotExistsError } from './errors/question-not-exists-error'
 
 interface FetchQuestionsUseCaseResponse {
-    questions: Question[]
+  questions: Question[]
 }
 
 export class FetchQuestionsUseCase {
-    constructor(private questionRepository: QuestionRepository) {}
+  constructor(private questionRepository: QuestionRepository) {}
 
-    async execute(): Promise<FetchQuestionsUseCaseResponse> {
-        const questions = await this.questionRepository.fetchQuestions()
+  async execute(): Promise<FetchQuestionsUseCaseResponse> {
+    const questions = await this.questionRepository.fetchMany()
 
-        if(!questions) {
-            throw new QuestionNotExistsError()
-        }
-
-        return { questions }
+    if (!questions) {
+      throw new QuestionNotExistsError()
     }
+
+    return { questions }
+  }
 }

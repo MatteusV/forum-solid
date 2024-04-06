@@ -91,11 +91,13 @@ model BestAnswer {
   id         String  @id @default(uuid())
   questionId String  @map("question_id")
   answerId   String  @map("answer_id")
-  delete     Boolean @default(true)
+  delete     Boolean @default(false)
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   answer   Answer   @relation(fields: [answerId], references: [id])
   question Question @relation(fields: [questionId], references: [id])
+
+  @@unique([questionId, answerId])
 }

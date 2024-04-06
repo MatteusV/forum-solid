@@ -1,5 +1,5 @@
 import { BestAnswer, Prisma } from '@prisma/client'
-import { BestAnswerRepository } from '../best-answer-repository'
+import { BestAnswerRepository, FindByIdsProps } from '../best-answer-repository'
 import { randomUUID } from 'crypto'
 
 export class InMemoryBestAnswerRepository implements BestAnswerRepository {
@@ -46,5 +46,18 @@ export class InMemoryBestAnswerRepository implements BestAnswerRepository {
 
       this.items[bestAnswerIndex] = bestAnswerDelete
     }
+  }
+
+  async findByUniqueIds(data: FindByIdsProps) {
+    const bestAnswer = this.items.find(
+      (item) =>
+        item.answerId === data.answerId && item.questionId === data.questionId,
+    )
+
+    if (!bestAnswer) {
+      return null
+    }
+
+    return bestAnswer
   }
 }

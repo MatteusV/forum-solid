@@ -7,7 +7,7 @@ import { InMemoryQuestionRepository } from '@/repositories/in-memory/in-memory-q
 import { InMemoryAnswerRepository } from '@/repositories/in-memory/in-memory-answer-repository'
 import { hash } from 'bcryptjs'
 import { UserNotExistsError } from './errors/user-not-exists-error'
-import { UserNotHavePemissionError } from './errors/user-not-have-permission-error'
+import { UserNotHavePermissionError } from './errors/user-not-have-permission-error'
 
 let bestAnswerRepository: InMemoryBestAnswerRepository
 let userRepository: InMemoryUserRepository
@@ -47,7 +47,6 @@ describe('Delete Best Answer Use Case', () => {
       authorId: user.id,
       content: 'content',
       questionId: question.id,
-      slug: 'slug',
     })
 
     const bestAnswer = await bestAnswerRepository.create({
@@ -87,7 +86,6 @@ describe('Delete Best Answer Use Case', () => {
       authorId: 'user-01',
       content: 'content',
       questionId: question.id,
-      slug: 'slug',
     })
 
     const bestAnswer = await bestAnswerRepository.create({
@@ -121,7 +119,6 @@ describe('Delete Best Answer Use Case', () => {
       authorId: 'user-01',
       content: 'content',
       questionId: question.id,
-      slug: 'slug',
     })
 
     const bestAnswer = await bestAnswerRepository.create({
@@ -134,6 +131,6 @@ describe('Delete Best Answer Use Case', () => {
         bestAnswerId: bestAnswer.id,
         userId: user.id,
       }),
-    ).rejects.toBeInstanceOf(UserNotHavePemissionError)
+    ).rejects.toBeInstanceOf(UserNotHavePermissionError)
   })
 })

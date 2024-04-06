@@ -6,7 +6,7 @@ import { AnswerRepository } from '@/repositories/answer-repository'
 import { QuestionRepository } from '@/repositories/question-repository'
 import { AnswerNotExistsError } from './errors/answer-not-exists-error'
 import { QuestionNotExistsError } from './errors/question-not-exists-error'
-import { UserNotHavePemissionError } from './errors/user-not-have-permission-error'
+import { UserNotHavePermissionError } from './errors/user-not-have-permission-error'
 
 interface DeleteBestAnswerUseCaseRequest {
   bestAnswerId: string
@@ -52,7 +52,7 @@ export class DeleteBestAnswerUseCase {
     }
 
     if (userId !== answer.authorId || userId !== question.authorId) {
-      throw new UserNotHavePemissionError()
+      throw new UserNotHavePermissionError()
     }
 
     await this.bestAnswerRepository.delete(bestAnswerId)

@@ -3,10 +3,11 @@ import { BestAnswerRepository } from '@/repositories/best-answer-repository'
 import { QuestionRepository } from '@/repositories/question-repository'
 import { BestAnswer } from '@prisma/client'
 import { QuestionNotExistsError } from './errors/question-not-exists-error'
-import { UserNotHavePemissionError } from './errors/user-not-have-permission-error'
+import { UserNotHavePermissionError } from './errors/user-not-have-permission-error'
 import { AnswerNotExistsError } from './errors/answer-not-exists-error'
 import { UserRepository } from '@/repositories/user-repository'
 import { UserNotExistsError } from './errors/user-not-exists-error'
+import { BestAnswerAlreadyExistsError } from './errors/best-answer-already-exists-error'
 
 interface CreateBestAnswerUseCaseRequest {
   questionId: string
@@ -31,6 +32,15 @@ export class CreateBestAnswerUseCase {
     questionId,
     userId,
   }: CreateBestAnswerUseCaseRequest): Promise<CreateBestAnswerUseCaseResponse> {
+    const bestAnswerExists = await this.bestAnswerRepository.findByUniqueIds({
+      answerId,
+      questionId,
+    })
+
+    if (bestAnswerExists) {
+      throw new BestAnswerAlreadyExistsError()
+    }
+
     const question = await this.questionRepository.findById(questionId)
     const answer = await this.answerRepository.findById(answerId)
     const user = await this.userRepository.findById(userId)
@@ -48,7 +58,7 @@ export class CreateBestAnswerUseCase {
     }
 
     if (question.authorId !== userId) {
-      throw new UserNotHavePemissionError()
+      throw new UserNotHavePermissionError()
     }
 
     const bestAnswer = await this.bestAnswerRepository.create({

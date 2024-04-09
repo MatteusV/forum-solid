@@ -2,7 +2,7 @@ import { QuestionRepository } from '@/repositories/question-repository'
 import { QuestionNotExistsError } from './errors/question-not-exists-error'
 import { UserRepository } from '@/repositories/user-repository'
 import { UserNotExistsError } from './errors/user-not-exists-error'
-import { UserNotHavePemissionError } from './errors/user-not-have-permission-error'
+import { UserNotHavePermissionError } from './errors/user-not-have-permission-error'
 
 interface DeleteQuestionUseCaseRequest {
   questionId: string
@@ -28,7 +28,7 @@ export class DeleteQuestionUseCase {
     }
 
     if (questionExists.authorId !== userId) {
-      throw new UserNotHavePemissionError()
+      throw new UserNotHavePermissionError()
     }
 
     await this.questionRepository.delete(questionId)

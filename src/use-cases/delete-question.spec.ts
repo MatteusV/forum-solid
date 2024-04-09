@@ -4,7 +4,7 @@ import { DeleteQuestionUseCase } from './delete-question'
 import { QuestionNotExistsError } from './errors/question-not-exists-error'
 import { InMemoryUserRepository } from '@/repositories/in-memory/in-memory-user-repository'
 import { hash } from 'bcryptjs'
-import { UserNotHavePemissionError } from './errors/user-not-have-permission-error'
+import { UserNotHavePermissionError } from './errors/user-not-have-permission-error'
 import { UserNotExistsError } from './errors/user-not-exists-error'
 
 let questionRepository: InMemoryQuestionRepository
@@ -92,6 +92,6 @@ describe('Delete Question Use Case', () => {
         questionId: createdQuestion.id,
         userId: user.id,
       }),
-    ).rejects.toBeInstanceOf(UserNotHavePemissionError)
+    ).rejects.toBeInstanceOf(UserNotHavePermissionError)
   })
 })

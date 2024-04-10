@@ -7,7 +7,6 @@
 - [x] Dever ser possivel criar uma pergunta;
 - [x] Dever ser possivel responder uma pergunta;
 - [x] Dever ser possivel deletar uma pergunta;
-- [x] Dever ser possivel deletar uma resposta;
 - [x] Dever ser possivel marcar a melhor resposta;
 - [x] Dever ser possivel listar todas as perguntas;
 - [x] Dever ser possivel listar todas respostas de uma pergunta;

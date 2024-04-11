@@ -18,9 +18,5 @@ export async function answersRoute(app: FastifyInstance) {
     defineTheBestAnswer,
   )
 
-  app.delete(
-    '/bestAnswer/:bestAnswerId',
-    { onRequest: [verifyJwt] },
-    deleteAnswer,
-  )
+  app.delete('/answers/:answerId', { onRequest: [verifyJwt] }, deleteAnswer)
 }
